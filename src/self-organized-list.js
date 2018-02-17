@@ -1,28 +1,30 @@
 class Node {
-    constructor(data) {
+    constructor(data = ' ') {
         this.data = data;
         this.next = null;
         this.prev = null;
     }
-}
+};
 
 class SelfOrganizedList {
     constructor() {
         this.head = null;
         this.tail = null;
         this.length = 0;
-        this.queue[];
+        this.queue = [];
     }
 
     insert(data) {
-      Node(data);
-      this.queue.push(Node);
-      this.tail = Node;
+      var node1 = new Node();
+      var node4 = new Node();
+      node4.data = data;
+      this.queue.push(node4);
+      this.tail = node4;
       if (this.head == null) this.head = this.tail;
       if (this.length !== 0) {
-        Node N = this.queue.shift()
-        this.prev = N;
-        N.next = Node(data);
+        node1 = this.queue.shift()
+        node4.prev = node1;
+        node1.next = this.tail;
       };
       this.length++;
     }
@@ -34,12 +36,13 @@ class SelfOrganizedList {
     at(index) {
       if (index < this.length)
       {
+        var node2 = new Node();
         if (index == 0) return this.head.data;
-        Node N1 = this.head.next;
+        node2 = this.head.next;
         for (var i = 1; i < index; i++) {
-          N1 = N1.next;
+          node2 = node2.next;
         };
-        return N1.data;
+        return node2.data;
       }
       else return null;
     }
@@ -47,34 +50,38 @@ class SelfOrganizedList {
     atNode(index) {
       if (index < this.length)
       {
+        var node3 = new Node();
         if (index == 0) return this.head;
-        Node N2 = this.head.next;
+        node3 = this.head.next;
         for (var i = 1; i < index; i++) {
-          N2 = N2.next;
+          node3 = node3.next;
         };
-        return N2;
+        return node3;
       }
       else return null;
     }
 
     findNode(data) {
       for(var i = 0; i < this.length; i++) {
-        if(at(i) == data) return atNode(i);
+        var node5 = atNode(i);
+        if(node5.data == data) {
+          return node5;
+        }
       }
-      return false;
+      return null;
     }
 
-    findIndex(node) {
+    findIndex(Node) {
       for(var i = 0; i < this.length; i++) {
-        if(at(i) == node.data) return i;
+        if(at(i) == Node.data) return i;
       }
     }
 
     toArray() {
-      var arr[];
+      var arr = [];
       for(var i = 0; i < this.length; i++)
         arr.push(at(i));
-      return arr[];
+      return arr;
     }
 
     removeAt(index) {
@@ -83,10 +90,10 @@ class SelfOrganizedList {
       this.length--;
     }
 
-    moveToFront(node) {
+    moveToFront(Node) {
       var dat1 = this.head.data;
       var dat2;
-      this.head.data = node.data;
+      this.head.data = Node.data;
       removeAt(findIndex(node)); //чтобы небыло повт узла кот двигаем вперед
       insert('I will die (T_T)');//чтобы размер остался тем же
       for(var i = 1; i < this.length; i++) {
@@ -97,7 +104,7 @@ class SelfOrganizedList {
     }
 
     reorganize(data) {
-      if(!findNode(data)) return false;
+      if(findNode(data) == false) return false;
       else moveToFront(findNode(data));
       return true;
     }
