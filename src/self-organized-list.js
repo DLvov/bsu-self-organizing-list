@@ -1,5 +1,5 @@
 class Node {
-    constructor(data = ' ') {
+    constructor(data = null) {
         this.data = data;
         this.next = null;
         this.prev = null;
@@ -63,7 +63,7 @@ class SelfOrganizedList {
 
     findNode(data) {
       for(var i = 0; i < this.length; i++) {
-        var node5 = atNode(i);
+        var node5 = this.atNode(i);
         if(node5.data == data) {
           return node5;
         }
@@ -73,39 +73,48 @@ class SelfOrganizedList {
 
     findIndex(Node) {
       for(var i = 0; i < this.length; i++) {
-        if(at(i) == Node.data) return i;
+        if(this.at(i) == Node.data) return i;
       }
     }
 
     toArray() {
       var arr = [];
       for(var i = 0; i < this.length; i++)
-        arr.push(at(i));
+        arr.push(this.at(i));
       return arr;
     }
 
     removeAt(index) {
-      atNode(index-1).next = atNode(index).next;
-      atNode(index+1).prev = atNode(index).prev;
       this.length--;
+      if (index < 0 || index > this.length - 1) return;
+      if (index == 0) {
+        this.atNode(index + 1).prev = null;
+        return;
+      };
+      if (index == this.length - 1) {
+        this.atNode(index - 1).next = null;
+        return;
+      };
+      this.atNode(index - 1).next = this.atNode(index).next;
+      this.atNode(index + 1).prev = this.atNode(index).prev;
     }
 
     moveToFront(Node) {
+
       var dat1 = this.head.data;
       var dat2;
+      if(this.head == Node) return;
       this.head.data = Node.data;
-      removeAt(findIndex(node)); //чтобы небыло повт узла кот двигаем вперед
-      insert('I will die (T_T)');//чтобы размер остался тем же
-      for(var i = 1; i < this.length; i++) {
-        dat2 = at(i).data;
-        at(i).data = dat1;
+      for(var i = 1; i < this.findIndex(Node); i++) {
+        dat2 = this.atNode(i).data;
+        this.atNode(i).data = dat1;
         dat1 = dat2;
       }
     }
 
     reorganize(data) {
-      if(findNode(data) == false) return false;
-      else moveToFront(findNode(data));
+      if(this.findNode(data) == null) return false;
+      else this.moveToFront(this.findNode(data));
       return true;
     }
 
