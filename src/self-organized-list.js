@@ -72,9 +72,8 @@ class SelfOrganizedList {
     }
 
     findIndex(Node) {
-      for(var i = 0; i < this.length; i++) {
-        if(this.at(i) == Node.data) return i;
-      }
+      var array = this.toArray();
+      return array.indexOf(Node.data);
     }
 
     toArray() {
@@ -85,30 +84,39 @@ class SelfOrganizedList {
     }
 
     removeAt(index) {
+      if (index < 0 && index > this.length - 1) return;
       this.length--;
-      if (index < 0 || index > this.length - 1) return;
+      if (this.length == 0) {
+        this.head = this.tail = null;
+        return;
+      };
       if (index == 0) {
-        this.atNode(index + 1).prev = null;
+        this.head = this.head.next;
+        this.head.prev = null;
         return;
+      }
+      var array = this.toArray();
+      var curr = this.head;
+      array.splice(index, 1);
+      for (var i = 0; i < this.length; i++) {
+        curr.data = array[i];
+        if (i == this.length - 1) {
+          this.tail = curr;
+          this.tail.next = null;
+        }
+        else curr = curr.next;
       };
-      if (index == this.length - 1) {
-        this.atNode(index - 1).next = null;
-        return;
-      };
-      this.atNode(index - 1).next = this.atNode(index).next;
-      this.atNode(index + 1).prev = this.atNode(index).prev;
     }
 
     moveToFront(Node) {
 
-      var dat1 = this.head.data;
-      var dat2;
-      if(this.head == Node) return;
-      this.head.data = Node.data;
-      for(var i = 1; i < this.findIndex(Node); i++) {
-        dat2 = this.atNode(i).data;
-        this.atNode(i).data = dat1;
-        dat1 = dat2;
+      var array = this.toArray();
+      var curr = this.head;
+      array.splice(array.indexOf(Node.data), 1);
+      array.unshift(Node.data);
+      for (var i = 0; i < this.length; i++) {
+        curr.data = array[i];
+        curr = curr.next;
       }
     }
 
